@@ -4,22 +4,22 @@
 
 # import standard python modules.
 import time
-
+ 
 # import adafruit dht library.
-#import adafruit_DHT
+import Adafruit_DHT
 
 # import Adafruit IO REST client.
 from Adafruit_IO import Client, Feed
 
 # Delay in-between sensor readings, in seconds.
-DHT_READ_TIMEOUT = 5
+DHT_READ_TIMEOUT = 15
 
 # Pin connected to DHT11 data pin - @Put here whats is the right number
-DHT_DATA_PIN = 26
+DHT_DATA_PIN = 17
 
 # Set Adafruit IO key.
 # the key is secret so not publish this when we publish this code!
-ADAFRUIT_IO_KEY = 'aio_XnQJ04ynzpJ9HdiiZYuSOlcRH0Zm'
+ADAFRUIT_IO_KEY = 'aio_stUp23NZ9T3Idjp9aiCfG4lffMcr'
 
 # Set  Adafruit IO username.
 ADAFRUIT_IO_USERNAME = 'diogocrlopes'
@@ -32,13 +32,13 @@ temperature_feed = aio.feeds('temperature')
 humidity_feed = aio.feeds('humidity')
 luminosity_feed = aio.feeds('luminosity')
 # Set up DHT11 Sensor.
-#dht11_sensor = Adafruit_DHT.DHT11
+dht11_sensor = Adafruit_DHT.DHT11
 
 while True:
     #For when we put the Raspberry in the loop:
-    #humidity, temperature = Adafruit_DHT.read_retry(dht11_sensor, DHT_DATA_PIN)
-    humidity,temperature,luminosity = 30,25,620
-
+    humidity, temperature = Adafruit_DHT.read_retry(dht11_sensor, DHT_DATA_PIN)
+    #humidity,temperature,luminosity = 30,25,620
+    luminosity = 620
     if humidity is not None and temperature is not None:
         print('Temp={0:0.1f}*C Humidity={1:0.1f}%'.format(temperature, humidity))
         # Send humidity and temperature feeds to Adafruit IO
