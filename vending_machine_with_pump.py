@@ -20,6 +20,7 @@ DHT_READ_TIMEOUT = 10
 # Pin connected to DHT11, Luminosity and PUM data pin - @Put here whats is the right number
 DHT_DATA_PIN = 17
 PUMP_DATA_PIN = 37
+LDR_DATA_PIN = 18
 
 #Setup of GPIO to work with BOARD PIN mode and OUTPUT
 GPIO.setmode(GPIO.BOARD)
