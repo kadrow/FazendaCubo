@@ -7,6 +7,7 @@
 import sys
 import time
 import RPi.GPIO as GPIO
+import math
 
 # import adafruit dht library.
 import Adafruit_DHT
@@ -20,7 +21,7 @@ DHT_READ_TIMEOUT = 10
 # Pin connected to DHT11, Luminosity and PUM data pin - @Put here whats is the right number
 DHT_DATA_PIN = 17
 PUMP_DATA_PIN = 37
-LDR_DATA_PIN = 12
+LDR_DATA_PIN = 7
 LIGHT_DATA_PIN = 13
 FAN_DATA_PIN = 15
 
@@ -33,10 +34,10 @@ GPIO.setup(FAN_DATA_PIN,GPIO.OUT)
 
 # Set Adafruit IO key.
 # the key is secret so not publish this when we publish this code!
-ADAFRUIT_IO_KEY = '******'
+ADAFRUIT_IO_KEY = '********'
 
 # Set  Adafruit IO username.
-ADAFRUIT_IO_USERNAME = '*****'
+ADAFRUIT_IO_USERNAME = '******'
 
 #Set the ID of the feed to subscribe to for updates.
 PUMP_ID = 'pump'
@@ -137,12 +138,16 @@ while True:
     #For when we put the Raspberry in the loop:
     humidity, temperature = Adafruit_DHT.read_retry(dht11_sensor, DHT_DATA_PIN)
     #humidity,temperature,luminosity = 30,25,620
-    luminosity = rc_time(LDR_DATA_PIN)
+    luminosity = rc_time(LDR_DATA_PIN) #returns the time it takes the capacitor to charge to 3/4
+    
+    
     if humidity is not None and temperature is not None:
-        print('Temp={0:0.1f}*C Humidity={1:0.1f}%'.format(temperature, humidity))
+        print('Temp={0:0.1f}*C Humidity={1:0.1f}% Luminosity={2:0.1f}'.format(temperature, humidity, luminosity))
+        #print('Temp={0:0.1f}*C Humidity={1:0.1f}%'.format(temperature, humidity))
         # Send humidity and temperature feeds to Adafruit IO
         temperature = '%.2f'%(temperature)
         humidity = '%.2f'%(humidity)
+        luminosity = '%.2f'%(luminosity)
         client.publish(temperature_feed, str(temperature))
         client.publish(humidity_feed, str(humidity))
         client.publish(luminosity_feed, str(luminosity))
@@ -151,3 +156,4 @@ while True:
         
     # Timeout to avoid flooding Adafruit IO
     time.sleep(DHT_READ_TIMEOUT)
+
