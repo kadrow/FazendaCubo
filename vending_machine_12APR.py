@@ -34,10 +34,10 @@ GPIO.setup(FAN_DATA_PIN,GPIO.OUT)
 
 # Set Adafruit IO key.
 # the key is secret so not publish this when we publish this code!
-ADAFRUIT_IO_KEY = 'aio_yWOq90OpQVNFEYVgaMVvZiX7JjKJ'
+ADAFRUIT_IO_KEY = '****'
 
 # Set  Adafruit IO username.
-ADAFRUIT_IO_USERNAME = 'diogocrlopes'
+ADAFRUIT_IO_USERNAME = '****'
 
 #Set the ID of the feed to subscribe to for updates.
 PUMP_ID = 'pump'
